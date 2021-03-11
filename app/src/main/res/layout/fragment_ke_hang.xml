@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/black"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:id="@+id/lieanerlayout"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <androidx.appcompat.widget.Toolbar
+            android:background="#3569EF"
+            app:title="Kho Hàng"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"/>
+        <TextView
+            android:textColor="@color/white"
+            android:text="Sản phẩm hiện có trong kho của bạn"
+            android:textSize="25sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerviewsanphamtrongkho"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+    <ImageButton
+        android:id="@+id/imagebuttonaddsanpham"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="100dp"
+        android:layout_alignBottom="@id/lieanerlayout"
+        android:layout_alignRight="@id/lieanerlayout"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/custom_button"
+        app:srcCompat="@android:drawable/ic_input_add"/>
+</RelativeLayout>

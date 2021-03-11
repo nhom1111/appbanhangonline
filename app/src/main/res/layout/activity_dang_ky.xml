@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#373636"
+    android:orientation="vertical"
+    tools:context=".activity.DangKy_Activity">
+    <androidx.appcompat.widget.Toolbar
+        android:background="#F11919"
+        android:id="@+id/toolbardk"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"/>
+    <EditText
+        android:id="@+id/edittexttentaikhoandk"
+        android:textColorHint="#FFFFFF"
+        android:textColor="#FFFFFF"
+        android:hint="Tên tài khoản"
+        android:layout_marginTop="150dp"
+        android:layout_gravity="center"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/edittextGmaildk"
+        android:textColorHint="#FFFFFF"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="10dp"
+        android:hint="Gmail"
+        android:layout_gravity="center"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/edittextSDTdk"
+        android:textColorHint="#FFFFFF"
+        android:textColor="#FFFFFF"
+        android:hint="Số điện thoại"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="center"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/edittextpassowrddk"
+        android:textColorHint="#FFFFFF"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="10dp"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:layout_gravity="center"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/buttondangkydk"
+        android:background="@drawable/custom_button_login"
+        android:text="Đăng Ký"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

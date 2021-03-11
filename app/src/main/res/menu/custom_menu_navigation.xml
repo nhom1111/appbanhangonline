@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/navigationtrangchu"
+        android:icon="@drawable/icontrangchu"
+        android:title="@string/navigationtrangchu"/>
+    <item android:id="@+id/navigationkehang"
+        android:icon="@drawable/iconkhohang"
+        android:title="@string/navigationkhohang"/>
+    <item android:id="@+id/navigationgiohang"
+        android:icon="@drawable/icongiohang"
+        android:title="Giỏ Hàng"/>
+    <item android:id="@+id/navigationthongke"
+        android:icon="@drawable/iconthongke"
+        android:title="@string/navigationthongke"/>
+    <item android:id="@+id/navigationtaikhoan"
+        android:icon="@drawable/iconuser"
+        android:title="@string/navigationtaikhoan"/>
+</menu>

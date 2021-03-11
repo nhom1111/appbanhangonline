@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AppBanHangOnline</string>
+    <string name="navigationtrangchu">Trang Chủ</string>
+    <string name="navigationkhohang">Kệ Hàng</string>
+    <string name="navigationhoadon">Hóa Đơn</string>
+    <string name="navigationthongke">Thống Kê</string>
+    <string name="navigationtaikhoan">Tài Khoản</string>
+</resources>
