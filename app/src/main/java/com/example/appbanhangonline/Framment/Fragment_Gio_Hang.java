@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +48,7 @@ import retrofit2.Response;
 
 public class Fragment_Gio_Hang extends Fragment {
     private static TextView txttongtien,txtgiohangtrong;
+    LinearLayout layouttongtien;
     View view;
     ListView lv;
     Button btnthanhtoan;
@@ -56,17 +58,15 @@ public class Fragment_Gio_Hang extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.fragment_gio_hang,container,false);
         Anhxa();
-
-
-
+        TinhTien();
+        KiemTraTaiKhoan();
         if (MainActivity.sanphamgiohang.size()!=0) {
+            txtgiohangtrong.setVisibility(View.INVISIBLE);
             adapter_gio_hang = new Adapter_Gio_Hang(getContext(), R.layout.dong_gio_hang, MainActivity.sanphamgiohang);
             lv.setAdapter(adapter_gio_hang);
         }else{
             txtgiohangtrong.setVisibility(View.VISIBLE);
         }
-        TinhTien();
-
 
         btnthanhtoan.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +89,7 @@ public class Fragment_Gio_Hang extends Fragment {
                             Date today = new Date();
                             String ngay = decimalFormat.format(today);
                             Dataserver dataserver = APIServer.getServer();
-                            Call callback = dataserver.insertdonhang(diachi,ngay,Fragment_Tai_Khoan.taiKhoan.getIdTaiKhoan());
+                            Call callback = dataserver.insertdonhang(diachi,ngay,MainActivity.taiKhoan.getTenTaiKhoan(),MainActivity.taiKhoan.getSDT());
                             callback.enqueue(new Callback() {
                                 @Override
                                 public void onResponse(Call call, Response response) {
@@ -136,22 +136,16 @@ public class Fragment_Gio_Hang extends Fragment {
 
                                            @Override
                                            public void onFailure(Call<String> call, Throwable t) {
-
                                            }
-                                       });
-                                        //else
+                                       });                                        //else
                                     }
                                 }
 
                                 @Override
                                 public void onFailure(Call call, Throwable t) {
-
                                 }
                             });
                             dialog.dismiss();
-
-
-
 
                         }
                     });
@@ -170,9 +164,26 @@ public class Fragment_Gio_Hang extends Fragment {
 
             }
         });
-
-
         return view;
+    }
+
+    private void KiemTraTaiKhoan() {
+        if (MainActivity.taiKhoan.getIdTaiKhoan()==null){
+            layouttongtien.setVisibility(View.INVISIBLE);
+            txttongtien.setVisibility(View.INVISIBLE);
+            txtgiohangtrong.setVisibility(View.GONE);
+            lv.setVisibility(View.INVISIBLE);
+            btnthanhtoan.setVisibility(View.INVISIBLE);
+            Toast.makeText(getContext(), "Bạn phải đăng nhập để sử dụng chức năng này!", Toast.LENGTH_SHORT).show();
+        }else{
+            layouttongtien.setVisibility(View.VISIBLE);
+            txttongtien.setVisibility(View.VISIBLE);
+            txtgiohangtrong.setVisibility(View.VISIBLE);
+            lv.setVisibility(View.VISIBLE);
+            btnthanhtoan.setVisibility(View.VISIBLE);
+        }
+
+
     }
 
     void Anhxa(){
@@ -181,6 +192,7 @@ public class Fragment_Gio_Hang extends Fragment {
         txtgiohangtrong.setVisibility(View.INVISIBLE);
         txttongtien = view.findViewById(R.id.textviewtongtien);
         btnthanhtoan = view.findViewById(R.id.buttongiohangtt);
+        layouttongtien=view.findViewById(R.id.layouttongtiengiohang);
     }
     public static void TinhTien(){
         long tongtien=0;

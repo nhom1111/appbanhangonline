@@ -29,32 +29,35 @@ public class Fragment_Tai_Khoan extends Fragment {
     CircleImageView circleImageView;
     LinearLayout lngioithieu,lndangxuat,lnthoat;
     TextView txttentaikhoan,txtsdt,txtgmail;
-    public static TaiKhoan taiKhoan;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view= inflater.inflate(R.layout.fragment_tai_khoan,container,false);
         Anhxa();
-        if (taiKhoan.getAnhTaiKhoan()!=null){
-            Picasso.with(getContext()).load((String) taiKhoan.getAnhTaiKhoan()).into(circleImageView);
+        if (MainActivity.taiKhoan.getIdTaiKhoan()==null){
+            Intent intent = new Intent(getActivity(),Login_Activity.class);
+            startActivity(intent);
         }else{
-            circleImageView.setImageResource(R.drawable.taikhoan);
-        }
-        txttentaikhoan.setText(taiKhoan.getTenTaiKhoan());
-        txtsdt.setText(taiKhoan.getSDT());
-        txtgmail.setText(taiKhoan.getGmail());
-        lndangxuat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                taiKhoan = new TaiKhoan();
-                SharedPreferences.Editor editor = MainActivity.sharedPreferences.edit();
-                editor.remove("tentaikhoan");
-                editor.remove("cbghinho");
-                editor.commit();
-                Intent intent = new Intent(getActivity(), Login_Activity.class);
-                startActivity(intent);
+            if (MainActivity.taiKhoan.getAnhTaiKhoan()!=null){
+                Picasso.with(getContext()).load((String) MainActivity.taiKhoan.getAnhTaiKhoan()).into(circleImageView);
+            }else{
+                circleImageView.setImageResource(R.drawable.taikhoan);
             }
-        });
+            txttentaikhoan.setText(MainActivity.taiKhoan.getTenTaiKhoan());
+            txtsdt.setText(MainActivity.taiKhoan.getSDT());
+            txtgmail.setText(MainActivity.taiKhoan.getGmail());
+            lndangxuat.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences.Editor editor = MainActivity.sharedPreferences.edit();
+                    editor.remove("tentaikhoan");
+                    editor.remove("cbghinho");
+                    editor.commit();
+                    Intent intent = new Intent(getActivity(), Login_Activity.class);
+                    startActivity(intent);
+                }
+            });
+        }
         return view;
     }
 

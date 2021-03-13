@@ -15,23 +15,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:text="Doanh Thu"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
         <TextView
             android:layout_marginRight="20dp"
             android:layout_alignParentRight="true"
-            android:id="@+id/textviewtienthongkedoanhthu"
+            android:id="@+id/textviewdoanhthuthongke"
             android:layout_width="wrap_content"
             android:textColor="#FFFFFF"
             android:textSize="20sp"
-            android:text="20.000.000 VND"
+            android:text="0 VND"
             android:layout_height="wrap_content"/>
     </RelativeLayout>
     <RelativeLayout
         android:id="@+id/layoutchitieuthongke"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
@@ -40,22 +40,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="10dp"
             android:text="Chi Tiêu"
             android:textColor="#FFFFFF"
             android:textSize="20sp" />
+
         <TextView
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            android:id="@+id/textviewchitieukedoanhthu"
+            android:id="@+id/textviewchitieuthongke"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="20dp"
+            android:text="-0 VND"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:text="-20.000.000 VND"
-            android:layout_height="wrap_content"/>
+            android:textSize="20sp" />
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/textviewcacdonhangcuaban"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
         android:textSize="20sp"

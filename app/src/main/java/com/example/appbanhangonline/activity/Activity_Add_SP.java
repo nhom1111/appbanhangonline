@@ -154,7 +154,7 @@ public class Activity_Add_SP extends AppCompatActivity {
 
     private void uploadanh(){
         String idloaisp = loaisp.getIdLoaiSP().toString();
-        String idtaikhoan = Fragment_Tai_Khoan.taiKhoan.getIdTaiKhoan().toString();
+        String idtaikhoan = MainActivity.taiKhoan.getIdTaiKhoan().toString();
         String tensp = edttensp.getText().toString();
         String soluong = edtsoluong.getText().toString();
         String gia =edtgia.getText().toString();

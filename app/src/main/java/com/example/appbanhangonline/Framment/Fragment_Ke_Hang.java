@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.appbanhangonline.Adapter.Adapter_San_Pham_Ke_Hang;
 import com.example.appbanhangonline.Model.SanPham;
+import com.example.appbanhangonline.Model.TaiKhoan;
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.Server.APIServer;
 import com.example.appbanhangonline.Server.Dataserver;
@@ -56,8 +57,11 @@ public class Fragment_Ke_Hang extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_ke_hang,container,false);
         AnhXa();
+        KiemTraTaiKhoan();
+
+
         EvenClickButton();
-        if (Fragment_Tai_Khoan.taiKhoan.getIdTaiKhoan()==null){
+        if (MainActivity.taiKhoan.getIdTaiKhoan()==null){
             ibtnAddsanpham.setEnabled(false);
         }
         if(MainActivity.sanphamtrongkho.size()==0){
@@ -70,6 +74,15 @@ public class Fragment_Ke_Hang extends Fragment {
             recyclerView.setAdapter(adapter);
         }
         return view;
+    }
+
+    private void KiemTraTaiKhoan() {
+        if (MainActivity.taiKhoan.getIdTaiKhoan()==null){
+            ibtnAddsanpham.setVisibility(View.INVISIBLE);
+            Toast.makeText(getContext(), "Bạn phải đăng nhập để sử dụng chức năng này!", Toast.LENGTH_SHORT).show();
+        }else{
+            ibtnAddsanpham.setVisibility(View.VISIBLE);
+        }
     }
 
     private void EvenClickButton() {
@@ -85,7 +98,7 @@ public class Fragment_Ke_Hang extends Fragment {
 
     private void GetData() {
         Dataserver dataserver = APIServer.getServer();
-        Call<List<SanPham>> callback= dataserver.getSanPhamTheoTK(Fragment_Tai_Khoan.taiKhoan.getIdTaiKhoan());
+        Call<List<SanPham>> callback= dataserver.getSanPhamTheoTK(MainActivity.taiKhoan.getIdTaiKhoan());
         callback.enqueue(new Callback<List<SanPham>>() {
             @Override
             public void onResponse(Call<List<SanPham>> call, Response<List<SanPham>> response) {

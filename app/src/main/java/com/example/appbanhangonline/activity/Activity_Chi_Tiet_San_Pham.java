@@ -113,7 +113,7 @@ public class Activity_Chi_Tiet_San_Pham extends AppCompatActivity {
         btndatmua.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Fragment_Tai_Khoan.taiKhoan.getIdTaiKhoan()==null){
+                if (MainActivity.taiKhoan.getIdTaiKhoan()==null){
                     Toast.makeText(Activity_Chi_Tiet_San_Pham.this, "Bạn phải đăng nhập thì mới có thể sử dụng chức năng này", Toast.LENGTH_SHORT).show();
                 }else {
                     Intent intent = new Intent(Activity_Chi_Tiet_San_Pham.this, MainActivity.class);

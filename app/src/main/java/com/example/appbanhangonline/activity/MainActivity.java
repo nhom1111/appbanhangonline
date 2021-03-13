@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -40,56 +41,57 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<LoaiSP> arrayloaisp=new ArrayList<>();
     public static ArrayList<Banner> banners=new ArrayList<>();
     public static ArrayList<LoaiSP> arrayAllloaiSP=new ArrayList<>();
+    public static TaiKhoan taiKhoan=null;
     BottomNavigationView navigationView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-
-        sharedPreferences =getSharedPreferences("dataLogin",MODE_PRIVATE);
-        boolean cbghinho = sharedPreferences.getBoolean("cbghinho",true);
+        navigationView = findViewById(R.id.bottomNavigationView);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Fragment_Trang_Chu()).commit();
+        navigationView.setSelectedItemId(R.id.navigationtrangchu);
+        KhoiTao();
         if (MainActivity.arrayAllloaiSP.size()==0){
             GetData();
         }
-        navigationView = findViewById(R.id.bottomNavigationView);
-
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Fragment_Trang_Chu()).commit();
-        navigationView.setSelectedItemId(R.id.navigationtrangchu);
-
-        if(cbghinho==true){
-            String name = sharedPreferences.getString("tentaikhoan","");
-            Dataserver dataserver = APIServer.getServer();
-            Call<TaiKhoan> callback = dataserver.getTaiKhoan(name);
-            callback.enqueue(new Callback<TaiKhoan>() {
-                @Override
-                public void onResponse(Call<TaiKhoan> call, Response<TaiKhoan> response) {
-                    TaiKhoan taikhoan = response.body();
-                    Fragment_Tai_Khoan.taiKhoan = taikhoan;
-                }
-                @Override
-                public void onFailure(Call<TaiKhoan> call, Throwable t) {
-
-                }
-            });
-        }
-        Bundle bundle = getIntent().getBundleExtra("activityhoadon");
-        if(bundle!=null){
-            SanPham sp = (SanPham) bundle.getSerializable("sanpham");
-            String soluong = bundle.getString("soluong");
-            String gia      = bundle.getString("gia");
-            sp.setSoLuong(soluong);
-            sp.setGiaSP(gia);
-            if(sp!=null) {
-                sanphamgiohang.add(sp);
-            }
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Fragment_Gio_Hang()).commit();
-            navigationView.setSelectedItemId(R.id.navigationgiohang);
+        sharedPreferences =getSharedPreferences("dataLogin",MODE_PRIVATE);
+        boolean cbghinho = sharedPreferences.getBoolean("cbghinho",false);
+        if (cbghinho==false){
+            if (taiKhoan ==null) taotaikhoanrong();
         }else{
-
+            String name = sharedPreferences.getString("tentaikhoan","");
+            getDataTaikhoan(name);
         }
+
+        Intent intent = getIntent();
+        if (intent!=null){
+            if (intent.hasExtra("taikhoan")){
+                taiKhoan = (TaiKhoan) intent.getSerializableExtra("taikhoan");
+                Toast.makeText(this,taiKhoan.getTenTaiKhoan(), Toast.LENGTH_SHORT).show();
+                getDataTaikhoan(taiKhoan.getTenTaiKhoan());
+            }
+
+
+            if (intent.hasExtra("activityhoadon")){
+                Bundle bundle = getIntent().getBundleExtra("activityhoadon");
+                if(bundle!=null){
+                    SanPham sp = (SanPham) bundle.getSerializable("sanpham");
+                    String soluong = bundle.getString("soluong");
+                    String gia      = bundle.getString("gia");
+                    sp.setSoLuong(soluong);
+                    sp.setGiaSP(gia);
+                    if(sp!=null) {
+                        sanphamgiohang.add(sp);
+                    }
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,new Fragment_Gio_Hang()).commit();
+                    navigationView.setSelectedItemId(R.id.navigationgiohang);
+                }
+
+
+            }
+        }
+
 
         navigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -109,22 +111,39 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment= new Fragment_Thong_Ke();
                         break;
                     case R.id.navigationtaikhoan:
-                        if (Fragment_Tai_Khoan.taiKhoan.getIdTaiKhoan()==null){
-                            Intent intent = new Intent(MainActivity.this,Login_Activity.class);
-                            startActivity(intent);
-                            selectedFragment= new Fragment_Tai_Khoan();
-                            break;
-                        }else{
-                            selectedFragment= new Fragment_Tai_Khoan();
-                            break;
+                        selectedFragment= new Fragment_Tai_Khoan();
                         }
-                }
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,selectedFragment).commit();
                 return true;
             }
         });
+
     }
 
+
+
+
+    private void getDataTaikhoan(String name) {
+        Dataserver dataserver = APIServer.getServer();
+        Call<TaiKhoan> callback = dataserver.getTaiKhoan(name);
+        callback.enqueue(new Callback<TaiKhoan>() {
+            @Override
+            public void onResponse(Call<TaiKhoan> call, Response<TaiKhoan> response) {
+                TaiKhoan taikhoan = response.body();
+                MainActivity.taiKhoan = taikhoan;
+            }
+            @Override
+            public void onFailure(Call<TaiKhoan> call, Throwable t) {
+            }
+        });
+    }
+
+    private void KhoiTao(){
+        sanphams=new ArrayList<>();
+        sanphamtrongkho=new ArrayList<>();
+        arrayloaisp=new ArrayList<>();
+    }
     private void GetData() {
         Dataserver dataserver = APIServer.getServer();
         Call<List<LoaiSP>> callback=dataserver.getAllLoaiSP();
@@ -133,9 +152,24 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<LoaiSP>> call, Response<List<LoaiSP>> response) {
                 MainActivity.arrayAllloaiSP = (ArrayList<LoaiSP>) response.body();
             }
-
             @Override
             public void onFailure(Call<List<LoaiSP>> call, Throwable t) {
+            }
+        });
+    }
+
+
+    private void taotaikhoanrong(){
+        Dataserver dataserver = APIServer.getServer();
+        Call<TaiKhoan> callback = dataserver.getTaiKhoan("");
+        callback.enqueue(new Callback<TaiKhoan>() {
+            @Override
+            public void onResponse(Call<TaiKhoan> call, Response<TaiKhoan> response) {
+                TaiKhoan taikhoan = response.body();
+                MainActivity.taiKhoan = taikhoan;
+            }
+            @Override
+            public void onFailure(Call<TaiKhoan> call, Throwable t) {
 
             }
         });

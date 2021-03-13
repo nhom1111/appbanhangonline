@@ -56,7 +56,7 @@ public class Login_Activity extends AppCompatActivity {
                         public void onResponse(Call<TaiKhoan> call, Response<TaiKhoan> response) {
                             TaiKhoan taikhoan = (TaiKhoan) response.body();
                             if (taikhoan.getPassword().equals(matkhau)) {
-                                Fragment_Tai_Khoan.taiKhoan = taikhoan;
+                                MainActivity.taiKhoan = taikhoan;
                                 if (cbghinho.isChecked()) {
                                     SharedPreferences.Editor editor = MainActivity.sharedPreferences.edit();
                                     editor.putString("tentaikhoan", taikhoan.getTenTaiKhoan());
@@ -70,6 +70,7 @@ public class Login_Activity extends AppCompatActivity {
                                 }
 
                                 Intent intent = new Intent(Login_Activity.this, MainActivity.class);
+                                intent.putExtra("taikhoan",taikhoan);
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(Login_Activity.this, "Mật khẩu sai", Toast.LENGTH_SHORT).show();

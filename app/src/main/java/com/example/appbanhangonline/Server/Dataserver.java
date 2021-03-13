@@ -2,6 +2,7 @@ package com.example.appbanhangonline.Server;
 
 import com.example.appbanhangonline.Model.Banner;
 import com.example.appbanhangonline.Model.LoaiSP;
+import com.example.appbanhangonline.Model.SPCho;
 import com.example.appbanhangonline.Model.SanPham;
 import com.example.appbanhangonline.Model.TaiKhoan;
 
@@ -61,7 +62,8 @@ public interface Dataserver {
     @POST("server/insertdonhang.php")
     Call<String> insertdonhang(@Field("diachi") String diachi,
                                @Field("ngay")String ngay,
-                               @Field("idkhachhang") String idkhachhang);
+                               @Field("tenkhachhang") String tenkhachhang,
+                               @Field("sdt") String std);
 
     @FormUrlEncoded
     @POST("server/insetctdonhang.php")
@@ -82,4 +84,19 @@ public interface Dataserver {
                                @Field("gia") String gia,
                                @Field("mota") String mota,
                                @Field("linkanh") String linkanh);
+
+
+    @FormUrlEncoded
+    @POST("server/getdoanhthu.php")
+    Call<String> getdoanhthu(@Field("idtaikhoan") String idtaikhoan);
+
+
+    @FormUrlEncoded
+    @POST("server/getchitieu.php")
+    Call<String> getchitieu(@Field("tentaikhoan") String tentaikhoan);
+
+
+    @FormUrlEncoded
+    @POST("server/getspcho.php")
+    Call<List<SPCho>> getspcho(@Field("idtaikhoan")String idtaikhoan);
 }
