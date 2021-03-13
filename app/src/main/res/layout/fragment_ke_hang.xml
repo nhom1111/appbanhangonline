@@ -32,8 +32,8 @@
         android:layout_marginBottom="100dp"
         android:layout_alignBottom="@id/lieanerlayout"
         android:layout_alignRight="@id/lieanerlayout"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:background="@drawable/custom_button"
         app:srcCompat="@android:drawable/ic_input_add"/>
 </RelativeLayout>

@@ -8,17 +8,16 @@
     android:layout_height="wrap_content">
     <RelativeLayout
         android:id="@+id/relativeLayout"
-        android:layout_margin="15dp"
+        android:layout_margin="5dp"
         android:orientation="horizontal"
         android:background ="@drawable/custom_dong_all_sp"
         android:layout_width="match_parent"
-        android:layout_height="130dp">
+        android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/imageviewsptrongkho"
-            android:layout_marginTop="13dp"
-            android:layout_marginLeft="7dp"
-            android:layout_width="100dp"
-            android:layout_height="100dp"/>
+            android:layout_margin="13dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"/>
         <LinearLayout
             android:layout_toRightOf="@id/imageviewsptrongkho"
             android:orientation="vertical"
@@ -34,7 +33,7 @@
                 android:layout_height="wrap_content">
                 <TextView
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="13sp"
                     android:text="Tên:"
                     android:textColor="@color/white"
                     android:textStyle="bold"
@@ -43,11 +42,10 @@
                 </TextView>
                 <TextView
                     android:maxLines="1"
-                    android:textStyle="bold"
                     android:id="@+id/textviewtensptrongkho"
                     android:layout_weight="2"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="13sp"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content">
                 </TextView>
@@ -59,8 +57,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:textStyle="bold"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="13sp"
                     android:textColor="@color/white"
                     android:text="Số lượng:"
                     android:layout_width="0dp"
@@ -69,7 +68,7 @@
                 <TextView
                     android:id="@+id/textviewsoluongsptrongkho"
                     android:layout_weight="2"
-                    android:textSize="20sp"
+                    android:textSize="13sp"
                     android:textColor="@color/white"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content">
@@ -82,8 +81,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <TextView
+                    android:textStyle="bold"
                     android:layout_weight="1"
-                    android:textSize="20sp"
+                    android:textSize="13sp"
                     android:text="Giá:"
                     android:textColor="@color/white"
                     android:layout_width="0dp"
@@ -92,22 +92,23 @@
                 <TextView
                     android:id="@+id/textviewgiasptrongkho"
                     android:layout_weight="2"
-                    android:textSize="20sp"
+                    android:textSize="13sp"
                     android:textColor="@color/white"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content">
                 </TextView>
             </LinearLayout>
-
         </LinearLayout>
     </RelativeLayout>
     <ImageButton
+        android:padding="3dp"
         android:scaleType="fitXY"
         android:id="@+id/imagebuttoneditsptrongkho"
         android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
         android:layout_alignRight="@id/relativeLayout"
         app:srcCompat="@android:drawable/ic_input_get"
         android:background="@drawable/custom_button_menu"
-        android:layout_width="30dp"
-        android:layout_height="30dp"/>
+        android:layout_width="20dp"
+        android:layout_height="20dp"/>
 </RelativeLayout>
