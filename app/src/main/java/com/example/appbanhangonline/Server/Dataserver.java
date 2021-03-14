@@ -6,13 +6,10 @@ import com.example.appbanhangonline.Model.SPCho;
 import com.example.appbanhangonline.Model.SanPham;
 import com.example.appbanhangonline.Model.TaiKhoan;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import okhttp3.MultipartBody;
 import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -99,4 +96,12 @@ public interface Dataserver {
     @FormUrlEncoded
     @POST("server/getspcho.php")
     Call<List<SPCho>> getspcho(@Field("idtaikhoan")String idtaikhoan);
+
+    @FormUrlEncoded
+    @POST("server/chapnhanspcho.php")
+    Call<String> updatecnTTspcho(@Field("idcthoadon")String idcthoadon);
+
+    @FormUrlEncoded
+    @POST("server/huyspcho.php")
+    Call<String> updatehuyttspcho(@Field("idchitiet")String idcthoadon);
 }

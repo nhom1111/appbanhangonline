@@ -1,7 +1,6 @@
 package com.example.appbanhangonline.Framment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,8 +34,8 @@ public class Fragment_Thong_Ke  extends Fragment {
     TextView txtdoanhthu,txtchitieu;
     TextView txtcacdonhangcuaban;
     ListView lvdonhang;
-    Adapter_SPCho adapter_spCho;
-
+    public static Adapter_SPCho adapter_spCho;
+    public static ArrayList<SPCho> spchos;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,7 +78,7 @@ public class Fragment_Thong_Ke  extends Fragment {
             choCall.enqueue(new Callback<List<SPCho>>() {
                 @Override
                 public void onResponse(Call<List<SPCho>> call, Response<List<SPCho>> response) {
-                    ArrayList<SPCho> spchos = (ArrayList<SPCho>) response.body();
+                    spchos = (ArrayList<SPCho>) response.body();
                     adapter_spCho = new Adapter_SPCho(R.layout.dong_sp_cho,getContext(),spchos);
                     lvdonhang.setAdapter(adapter_spCho);
                 }

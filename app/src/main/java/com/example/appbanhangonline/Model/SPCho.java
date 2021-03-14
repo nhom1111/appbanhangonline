@@ -5,6 +5,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class SPCho {
 
+@SerializedName("IdCT")
+@Expose
+private String idCT;
 @SerializedName("TenKH")
 @Expose
 private String tenKH;
@@ -20,6 +23,14 @@ private String gia;
 @SerializedName("AnhSP")
 @Expose
 private String anhSP;
+
+public String getIdCT() {
+return idCT;
+}
+
+public void setIdCT(String idCT) {
+this.idCT = idCT;
+}
 
 public String getTenKH() {
 return tenKH;

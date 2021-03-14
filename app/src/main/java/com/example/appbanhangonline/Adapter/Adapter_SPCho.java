@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ActionMenuView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -14,15 +13,19 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuBuilder;
-
+import com.example.appbanhangonline.Framment.Fragment_Thong_Ke;
 import com.example.appbanhangonline.Model.SPCho;
 import com.example.appbanhangonline.R;
+import com.example.appbanhangonline.Server.APIServer;
+import com.example.appbanhangonline.Server.Dataserver;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Adapter_SPCho extends BaseAdapter {
     int Layout;
@@ -86,14 +89,13 @@ public class Adapter_SPCho extends BaseAdapter {
         viewHolder.ibtnmenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showmenu(viewHolder);
+                showmenu(viewHolder,spcho,position);
             }
         });
-
         return convertView;
     }
 
-    private void showmenu(ViewHolder viewholder){
+    private void showmenu(ViewHolder viewholder,SPCho spCho,int position){
         PopupMenu popupMenu = new PopupMenu(context,viewholder.ibtnmenu);
         popupMenu.getMenuInflater().inflate(R.menu.menu_spcho,popupMenu.getMenu());
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -101,10 +103,49 @@ public class Adapter_SPCho extends BaseAdapter {
             public boolean onMenuItemClick(MenuItem item) {
                 switch(item.getItemId()){
                     case R.id.menu_sp_cho_chapnhan:
-                        Toast.makeText(context, "chấp nhận", Toast.LENGTH_SHORT).show();
+                        Dataserver dataserver = APIServer.getServer();
+                        Call<String> call = dataserver.updatecnTTspcho(spCho.getIdCT());
+                        call.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                String kq = response.body();
+                                if (kq.equals("successed")){
+                                    Toast.makeText(context,"Bạn đã chấp nhận đơn hàng này!", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    if (kq.equals("failed")){
+                                        Toast.makeText(context, "Lỗi hệ thống, vui lòng thử lại sau ít phút!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                Fragment_Thong_Ke.spchos.remove(position);
+                                Fragment_Thong_Ke.adapter_spCho.notifyDataSetChanged();
+                            }
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+                            }
+                        });
                         break;
                     case R.id.menu_sp_cho_huy:
-                        Toast.makeText(context, "Hủy", Toast.LENGTH_SHORT).show();
+                        Dataserver dataserver1 = APIServer.getServer();
+                        Call<String> call1 = dataserver1.updatehuyttspcho(spCho.getIdCT());
+                        call1.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                String kq = response.body();
+                                if (kq.equals("successed")){
+                                    Toast.makeText(context,"Bạn đã hủy đơn hàng này!", Toast.LENGTH_SHORT).show();
+                                }else{
+                                    if (kq.equals("failed")){
+                                        Toast.makeText(context, "Lỗi hệ thống, vui lòng thử lại sau ít phút!", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                Fragment_Thong_Ke.spchos.remove(position);
+                                Fragment_Thong_Ke.adapter_spCho.notifyDataSetChanged();
+                            }
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+                            }
+                        });
+
                         break;
                 }
                 return false;
