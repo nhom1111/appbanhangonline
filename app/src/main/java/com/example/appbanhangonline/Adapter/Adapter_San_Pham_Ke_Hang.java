@@ -62,9 +62,9 @@ public class Adapter_San_Pham_Ke_Hang extends RecyclerView.Adapter<Adapter_San_P
             @Override
             public void onClick(View v) {
                 ShowMenu();
-
-
             }
+
+
             private void ShowMenu() {
                 PopupMenu popupMenu = new PopupMenu(context,holder.ibtnEdit);
                 popupMenu.getMenuInflater().inflate(R.menu.men_sanpham,popupMenu.getMenu());
@@ -84,10 +84,12 @@ public class Adapter_San_Pham_Ke_Hang extends RecyclerView.Adapter<Adapter_San_P
                 });
                 popupMenu.show();
             }
+
+
             private void DialogShow(){
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
                 alertDialog.setTitle("Delete");
-                alertDialog.setMessage("Bạn có muốn xóa sản phẩm này khỏi kho hàng không");
+                alertDialog.setMessage("Bạn có muốn xóa sản phẩm này khỏi kệ hàng không?");
                 alertDialog.setNegativeButton("Có", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

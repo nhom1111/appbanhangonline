@@ -52,6 +52,9 @@ public class Fragment_Tai_Khoan extends Fragment {
                     SharedPreferences.Editor editor = MainActivity.sharedPreferences.edit();
                     editor.remove("tentaikhoan");
                     editor.remove("cbghinho");
+                    MainActivity.taiKhoan = new TaiKhoan();
+                    MainActivity.sanphamtrongkho.clear();
+                    MainActivity.sanphamgiohang.clear();;
                     editor.commit();
                     Intent intent = new Intent(getActivity(), Login_Activity.class);
                     startActivity(intent);

@@ -76,9 +76,11 @@ public class Activity_Add_SP extends AppCompatActivity {
             public void onClick(View v) {
                 ActivityCompat.requestPermissions(Activity_Add_SP.this,new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         REQUEST_CODE_FOLDER);
+
+//                ActivityCompat.requestPermissions(Activity_Add_SP.this,new String[]{Manifest.permission.CAMERA},
+//                        REQUETS_CODE_CAMERA);
             }
         });
-
 
         btnthem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,7 +106,6 @@ public class Activity_Add_SP extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
         switch (requestCode){
             case REQUETS_CODE_CAMERA:
                 if(grantResults.length>0&&grantResults[0]== PackageManager.PERMISSION_GRANTED){
@@ -124,7 +125,6 @@ public class Activity_Add_SP extends AppCompatActivity {
                 }
                 break;
         }
-
 
     }
     @Override
@@ -207,11 +207,9 @@ public class Activity_Add_SP extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
-                    Log.d("BBB", "loi text " + t.toString());
+                    Toast.makeText(Activity_Add_SP.this,t.toString(), Toast.LENGTH_SHORT).show();
                 }
             });
-
-
         }
 
     }
@@ -226,11 +224,9 @@ public class Activity_Add_SP extends AppCompatActivity {
         btnthem      =findViewById(R.id.buttonaddspThemsp);
         btnhuy       =findViewById(R.id.buttonaddsphuysp);
         imganh    =findViewById(R.id.imageviewaddsanphamanhsp);
-        imganh.setImageResource(R.drawable.anhnen);
+//        imganh.setImageResource(R.drawable.anhnen);
         toolbar =findViewById(R.id.toolbaraddsanpham);
         txtthaydoi=findViewById(R.id.textviewthaydoiaddsp);
-
-
 
 
 

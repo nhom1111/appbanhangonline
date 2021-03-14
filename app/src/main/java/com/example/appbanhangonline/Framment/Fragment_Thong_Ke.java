@@ -44,7 +44,7 @@ public class Fragment_Thong_Ke  extends Fragment {
         AnhXa();
         KiemTraTaiKhoan();
 
-        if (!MainActivity.taiKhoan.getIdTaiKhoan().equals("")){
+        if (MainActivity.taiKhoan.getIdTaiKhoan()!=null){
             Dataserver dataserver = APIServer.getServer();
             Call<String> callback = dataserver.getdoanhthu(MainActivity.taiKhoan.getIdTaiKhoan());
             callback.enqueue(new Callback<String>() {

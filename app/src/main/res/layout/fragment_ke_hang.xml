@@ -12,12 +12,13 @@
         android:layout_height="match_parent">
         <androidx.appcompat.widget.Toolbar
             android:background="#3569EF"
-            app:title="Kho Hàng"
+            app:title="Kệ Hàng"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"/>
         <TextView
+            android:id="@+id/textviewspctkhcb"
             android:textColor="@color/white"
-            android:text="Sản phẩm hiện có trong kho của bạn"
+            android:text="Sản phẩm hiện có trên kệ hàng của bạn"
             android:textSize="25sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

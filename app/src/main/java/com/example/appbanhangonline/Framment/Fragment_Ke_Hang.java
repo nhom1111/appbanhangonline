@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,7 @@ public class Fragment_Ke_Hang extends Fragment {
     View view;
     RecyclerView recyclerView;
     ImageButton ibtnAddsanpham;
+    TextView txtspctkhcb;
     public static Adapter_San_Pham_Ke_Hang adapter;
     @Nullable
     @Override
@@ -62,7 +64,8 @@ public class Fragment_Ke_Hang extends Fragment {
 
         EvenClickButton();
         if (MainActivity.taiKhoan.getIdTaiKhoan()==null){
-            ibtnAddsanpham.setEnabled(false);
+            ibtnAddsanpham.setVisibility(View.INVISIBLE);
+            txtspctkhcb.setVisibility(View.INVISIBLE);
         }
         if(MainActivity.sanphamtrongkho.size()==0){
             GetData();
@@ -119,6 +122,9 @@ public class Fragment_Ke_Hang extends Fragment {
     private void AnhXa() {
         recyclerView = view.findViewById(R.id.recyclerviewsanphamtrongkho);
         ibtnAddsanpham = view.findViewById(R.id.imagebuttonaddsanpham);
+        txtspctkhcb = view.findViewById(R.id.textviewspctkhcb);
+        ibtnAddsanpham.setVisibility(View.VISIBLE);
+        txtspctkhcb.setVisibility(View.VISIBLE);
     }
 
 }

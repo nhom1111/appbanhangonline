@@ -60,12 +60,11 @@ public class Fragment_Gio_Hang extends Fragment {
         Anhxa();
         TinhTien();
         KiemTraTaiKhoan();
+
         if (MainActivity.sanphamgiohang.size()!=0) {
             txtgiohangtrong.setVisibility(View.INVISIBLE);
             adapter_gio_hang = new Adapter_Gio_Hang(getContext(), R.layout.dong_gio_hang, MainActivity.sanphamgiohang);
             lv.setAdapter(adapter_gio_hang);
-        }else{
-            txtgiohangtrong.setVisibility(View.VISIBLE);
         }
 
         btnthanhtoan.setOnClickListener(new View.OnClickListener() {
@@ -171,7 +170,7 @@ public class Fragment_Gio_Hang extends Fragment {
         if (MainActivity.taiKhoan.getIdTaiKhoan()==null){
             layouttongtien.setVisibility(View.INVISIBLE);
             txttongtien.setVisibility(View.INVISIBLE);
-            txtgiohangtrong.setVisibility(View.GONE);
+            txtgiohangtrong.setVisibility(View.INVISIBLE);
             lv.setVisibility(View.INVISIBLE);
             btnthanhtoan.setVisibility(View.INVISIBLE);
             Toast.makeText(getContext(), "Bạn phải đăng nhập để sử dụng chức năng này!", Toast.LENGTH_SHORT).show();
