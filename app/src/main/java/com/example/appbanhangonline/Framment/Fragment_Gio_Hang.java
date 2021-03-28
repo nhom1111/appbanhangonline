@@ -88,18 +88,14 @@ public class Fragment_Gio_Hang extends Fragment {
                             Date today = new Date();
                             String ngay = decimalFormat.format(today);
                             Dataserver dataserver = APIServer.getServer();
-                            Call callback = dataserver.insertdonhang(diachi,ngay,MainActivity.taiKhoan.getTenTaiKhoan(),MainActivity.taiKhoan.getSDT());
+                            Call callback = dataserver.insertdonhang(diachi,ngay,MainActivity.taiKhoan.getIdTaiKhoan());
                             callback.enqueue(new Callback() {
                                 @Override
                                 public void onResponse(Call call, Response response) {
                                    final String kq = (String) response.body();
-
-
                                    if (kq.equals("fail")){
                                         Toast.makeText(getContext(), "Thất Bại", Toast.LENGTH_SHORT).show();
                                     }else{
-                                       Toast.makeText(getContext(), "hoadon ok", Toast.LENGTH_SHORT).show();
-
                                        JSONArray jsonArray = new JSONArray();
                                        for (int i=0;i<MainActivity.sanphamgiohang.size();i++){
                                            JSONObject jsonObject = new JSONObject();
@@ -113,7 +109,6 @@ public class Fragment_Gio_Hang extends Fragment {
                                            }
                                            jsonArray.put(jsonObject);
                                        }
-
                                        String json = String.valueOf(jsonArray);
                                        Dataserver dataserver1 = APIServer.getServer();
                                        Call callback1 = dataserver1.insertctdh(json);
@@ -132,14 +127,12 @@ public class Fragment_Gio_Hang extends Fragment {
                                                    }
                                                }
                                            }
-
                                            @Override
                                            public void onFailure(Call<String> call, Throwable t) {
                                            }
                                        });                                        //else
                                     }
                                 }
-
                                 @Override
                                 public void onFailure(Call call, Throwable t) {
                                 }
@@ -155,12 +148,7 @@ public class Fragment_Gio_Hang extends Fragment {
                         }
                     });
                     dialog.show();
-
-
                 }
-
-
-
             }
         });
         return view;

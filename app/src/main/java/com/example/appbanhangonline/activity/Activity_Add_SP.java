@@ -32,6 +32,7 @@ import com.example.appbanhangonline.Adapter.Adapter_Spinner_Addsp;
 import com.example.appbanhangonline.Adapter.LoaiSP_Adapter;
 import com.example.appbanhangonline.Framment.Fragment_Tai_Khoan;
 import com.example.appbanhangonline.Model.LoaiSP;
+import com.example.appbanhangonline.Model.SanPham;
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.Server.APIServer;
 import com.example.appbanhangonline.Server.Dataserver;
@@ -56,14 +57,10 @@ public class Activity_Add_SP extends AppCompatActivity {
     TextView txtthaydoi;
     Spinner sploai;
     Adapter_Spinner_Addsp adapter_spinner_addsp;
-
     final int REQUETS_CODE_CAMERA =123;
     final int REQUEST_CODE_FOLDER =456;
     String realpath="";
-
     public static LoaiSP loaisp = new LoaiSP();
-
-
     Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +68,16 @@ public class Activity_Add_SP extends AppCompatActivity {
         setContentView(R.layout.activity_add_sp);
 
         AnhXa();
+        Intent intent = getIntent();
+        if (intent.hasExtra("sanpham")){
+            SanPham sp = (SanPham) intent.getSerializableExtra("sanpham");
+            edttensp.setText(sp.getTenSP());
+            edtgia.setText(sp.getGiaSP());
+            edtmota.setText(sp.getMoTa());
+            edtsoluong.setText(sp.getSoLuong());
+            sploai.setSelection(Integer.parseInt(sp.getIdLoaiSP()));
+            btnthem.setText("Sửa");
+        }
         txtthaydoi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +88,6 @@ public class Activity_Add_SP extends AppCompatActivity {
 //                        REQUETS_CODE_CAMERA);
             }
         });
-
         btnthem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,15 +99,12 @@ public class Activity_Add_SP extends AppCompatActivity {
 
             }
         });
-
-
         btnhuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
     }
 
     @Override
@@ -153,17 +156,16 @@ public class Activity_Add_SP extends AppCompatActivity {
 
 
     private void uploadanh(){
-        String idloaisp = loaisp.getIdLoaiSP().toString();
+        LoaiSP loaisp = (LoaiSP) sploai.getSelectedItem();
+        String idloaisp = loaisp.getIdLoaiSP();
         String idtaikhoan = MainActivity.taiKhoan.getIdTaiKhoan().toString();
         String tensp = edttensp.getText().toString();
         String soluong = edtsoluong.getText().toString();
         String gia =edtgia.getText().toString();
         String mota=edtmota.getText().toString();
-
         if (idloaisp.equals("")||tensp.equals("")||soluong.equals("")||gia.equals("")||mota.equals("")) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
         }else {
-
             File file = new File(realpath);
             String file_path = file.getAbsolutePath();
             String[] mangtenfile = file_path.split("\\.");

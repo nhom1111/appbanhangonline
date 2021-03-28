@@ -59,8 +59,9 @@ public interface Dataserver {
     @POST("server/insertdonhang.php")
     Call<String> insertdonhang(@Field("diachi") String diachi,
                                @Field("ngay")String ngay,
-                               @Field("tenkhachhang") String tenkhachhang,
-                               @Field("sdt") String std);
+                               @Field("idkhachhang") String idkhachhang);
+
+
 
     @FormUrlEncoded
     @POST("server/insetctdonhang.php")
@@ -90,7 +91,7 @@ public interface Dataserver {
 
     @FormUrlEncoded
     @POST("server/getchitieu.php")
-    Call<String> getchitieu(@Field("tentaikhoan") String tentaikhoan);
+    Call<String> getchitieu(@Field("idkhachhang") String idkhachhang);
 
 
     @FormUrlEncoded

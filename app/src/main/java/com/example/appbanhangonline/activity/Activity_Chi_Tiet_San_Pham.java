@@ -19,6 +19,7 @@ import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
 
+
 public class Activity_Chi_Tiet_San_Pham extends AppCompatActivity {
     Toolbar toolbarct;
     ImageView imageView;
@@ -32,8 +33,6 @@ public class Activity_Chi_Tiet_San_Pham extends AppCompatActivity {
         AnhXa();
         ActionToolBar();
         GetInformation();
-
-
     }
     private void GetInformation() {
         SanPham sp = (SanPham) getIntent().getSerializableExtra("sanpham");
@@ -116,22 +115,26 @@ public class Activity_Chi_Tiet_San_Pham extends AppCompatActivity {
                 if (MainActivity.taiKhoan.getIdTaiKhoan()==null){
                     Toast.makeText(Activity_Chi_Tiet_San_Pham.this, "Bạn phải đăng nhập thì mới có thể sử dụng chức năng này", Toast.LENGTH_SHORT).show();
                 }else {
-                    Intent intent = new Intent(Activity_Chi_Tiet_San_Pham.this, MainActivity.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("sanpham", sp);
-                    String soluong = edtsoluongmua.getText().toString();
-                    int giaint = Integer.parseInt(soluong)*Integer.parseInt(sp.getGiaSP());
-                    String gia = String.valueOf(giaint);
-
-                    bundle.putString("soluong", soluong);
-                    bundle.putString("gia",gia);
-                    intent.putExtra("activityhoadon", bundle);
-                    startActivity(intent);
+                    int idtaikhoan = Integer.parseInt(MainActivity.taiKhoan.getIdTaiKhoan());
+                    int idtksp = Integer.parseInt(sp.getIdTaiKhoan());
+                    if (idtaikhoan!=idtksp) {
+                        Intent intent = new Intent(Activity_Chi_Tiet_San_Pham.this, MainActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("sanpham", sp);
+                        String soluong = edtsoluongmua.getText().toString();
+                        int giaint = Integer.parseInt(soluong) * Integer.parseInt(sp.getGiaSP());
+                        String gia = String.valueOf(giaint);
+                        bundle.putString("soluong", soluong);
+                        bundle.putString("gia", gia);
+                        intent.putExtra("activityhoadon", bundle);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(Activity_Chi_Tiet_San_Pham.this,"Đây là sản phẩm của bạn!", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
     }
-
     void AnhXa(){
         toolbarct   = findViewById(R.id.toolbarchitietsanpham);
         imageView   = findViewById(R.id.imageviewchitietsanpham);

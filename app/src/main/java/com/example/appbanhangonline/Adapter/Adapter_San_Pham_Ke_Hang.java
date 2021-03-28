@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -23,6 +24,7 @@ import com.example.appbanhangonline.Model.SanPham;
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.Server.APIServer;
 import com.example.appbanhangonline.Server.Dataserver;
+import com.example.appbanhangonline.activity.Activity_Add_SP;
 import com.example.appbanhangonline.activity.MainActivity;
 import com.squareup.picasso.Picasso;
 
@@ -53,6 +55,8 @@ public class Adapter_San_Pham_Ke_Hang extends RecyclerView.Adapter<Adapter_San_P
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SanPham sp = arrayListsanphamm.get(position);
+
+
         Picasso.with(context).load(sp.getAnhSP()).into(holder.imgAnh);
         holder.txtTen.setText(sp.getTenSP());
         holder.txtSoluong.setText(sp.getSoLuong());
@@ -73,7 +77,9 @@ public class Adapter_San_Pham_Ke_Hang extends RecyclerView.Adapter<Adapter_San_P
                     public boolean onMenuItemClick(MenuItem item) {
                         switch(item.getItemId()){
                             case R.id.menu_edit_sanpham:
-
+                                Intent intent = new Intent(context, Activity_Add_SP.class);
+                                intent.putExtra("sanpham",sp);
+                                context.startActivity(intent);
                                 break;
                             case R.id.menu_delete_sanpham:
                                 DialogShow();

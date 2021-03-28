@@ -45,6 +45,7 @@ public class Fragment_Thong_Ke  extends Fragment {
 
         if (MainActivity.taiKhoan.getIdTaiKhoan()!=null){
             Dataserver dataserver = APIServer.getServer();
+
             Call<String> callback = dataserver.getdoanhthu(MainActivity.taiKhoan.getIdTaiKhoan());
             callback.enqueue(new Callback<String>() {
                 @Override
@@ -59,7 +60,7 @@ public class Fragment_Thong_Ke  extends Fragment {
                     }
             });
 
-            Call<String> call = dataserver.getchitieu(MainActivity.taiKhoan.getTenTaiKhoan());
+            Call<String> call = dataserver.getchitieu(MainActivity.taiKhoan.getIdTaiKhoan());
             call.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
@@ -74,6 +75,7 @@ public class Fragment_Thong_Ke  extends Fragment {
                 }
             });
 
+
             Call<List<SPCho>> choCall = dataserver.getspcho(MainActivity.taiKhoan.getIdTaiKhoan());
             choCall.enqueue(new Callback<List<SPCho>>() {
                 @Override
@@ -82,10 +84,8 @@ public class Fragment_Thong_Ke  extends Fragment {
                     adapter_spCho = new Adapter_SPCho(R.layout.dong_sp_cho,getContext(),spchos);
                     lvdonhang.setAdapter(adapter_spCho);
                 }
-
                 @Override
                 public void onFailure(Call<List<SPCho>> call, Throwable t) {
-
                 }
             });
 

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.appbanhangonline.Framment.Fragment_Thong_Ke;
 import com.example.appbanhangonline.Model.SPCho;
+import com.example.appbanhangonline.Model.TaiKhoan;
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.Server.APIServer;
 import com.example.appbanhangonline.Server.Dataserver;
@@ -31,7 +32,6 @@ public class Adapter_SPCho extends BaseAdapter {
     int Layout;
     Context context;
     ArrayList<SPCho> arraySPCho;
-
     public Adapter_SPCho(int layout, Context context, ArrayList<SPCho> arraySPCho) {
         Layout = layout;
         this.context = context;
@@ -65,7 +65,7 @@ public class Adapter_SPCho extends BaseAdapter {
             viewHolder = new ViewHolder();
             viewHolder.txtgia = convertView.findViewById(R.id.textviewgiaspcho);
             viewHolder.txttensp = convertView.findViewById(R.id.textviewtenspcho);
-            viewHolder.txtnguoimua=convertView.findViewById(R.id.textviewtennguoimuaspcho);
+            viewHolder.txtdiachi=convertView.findViewById(R.id.textviewdiachispcho);
             viewHolder.txtsoluong=convertView.findViewById(R.id.textviewsoluongspcho);
             viewHolder.imganhsp=convertView.findViewById(R.id.imageviewspcho);
             viewHolder.ibtnmenu=convertView.findViewById(R.id.imagebuttonmenuspcho);
@@ -73,19 +73,14 @@ public class Adapter_SPCho extends BaseAdapter {
         }else{
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
-
-
-
         SPCho spcho = arraySPCho.get(position);
         viewHolder.txttensp.setText(spcho.getTenSP());
-        viewHolder.txtnguoimua.setText(spcho.getTenKH());
+        viewHolder.txtdiachi.setText(spcho.getDiaChi());
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         int gia = Integer.parseInt(spcho.getGia());
         viewHolder.txtgia.setText(decimalFormat.format(gia)+" VND");
         viewHolder.txtsoluong.setText(spcho.getSoLuong());
         Picasso.with(context).load(spcho.getAnhSP()).into(viewHolder.imganhsp);
-
         viewHolder.ibtnmenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,7 +151,7 @@ public class Adapter_SPCho extends BaseAdapter {
 
 
     class ViewHolder{
-        TextView txttensp,txtsoluong,txtgia,txtnguoimua;
+        TextView txttensp,txtsoluong,txtgia,txtdiachi;
         ImageView imganhsp;
         ImageButton ibtnmenu;
     }
