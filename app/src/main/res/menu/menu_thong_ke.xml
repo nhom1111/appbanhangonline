@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Theo Tháng"
+        android:id="@+id/menuthongketheothang"/>
+    <item android:title="Theo Quý"
+        android:id="@+id/menuthongketheoquy"/>
+    <item android:title="Theo Năm"
+        android:id="@+id/menuthongketheonam"/>
+</menu>

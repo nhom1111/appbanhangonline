@@ -70,7 +70,6 @@ public class Activity_Chi_Tiet_San_Pham extends AppCompatActivity {
 
 
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
-
         btncong.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,12 +121,19 @@ public class Activity_Chi_Tiet_San_Pham extends AppCompatActivity {
                         Bundle bundle = new Bundle();
                         bundle.putSerializable("sanpham", sp);
                         String soluong = edtsoluongmua.getText().toString();
-                        int giaint = Integer.parseInt(soluong) * Integer.parseInt(sp.getGiaSP());
-                        String gia = String.valueOf(giaint);
-                        bundle.putString("soluong", soluong);
-                        bundle.putString("gia", gia);
-                        intent.putExtra("activityhoadon", bundle);
-                        startActivity(intent);
+                        //xét số lượng trong edtsoluong. Nếu số lượng lớn sp hiện có hơn thì thông báo số lượng tối đa
+                        if (Integer.parseInt(soluong)<=Integer.parseInt(sp.getSoLuong())) {
+                            int giaint = Integer.parseInt(soluong) * Integer.parseInt(sp.getGiaSP());
+                            String gia = String.valueOf(giaint);
+                            bundle.putString("soluong", soluong);
+                            bundle.putString("gia", gia);
+                            intent.putExtra("activityhoadon", bundle);
+                            startActivity(intent);
+                        }else{
+                            btntru.setVisibility(View.VISIBLE);
+                            Toast.makeText(Activity_Chi_Tiet_San_Pham.this,"Số lượng tối đa là:"+sp.getSoLuong(), Toast.LENGTH_SHORT).show();
+                        }
+
                     }else{
                         Toast.makeText(Activity_Chi_Tiet_San_Pham.this,"Đây là sản phẩm của bạn!", Toast.LENGTH_SHORT).show();
                     }
@@ -135,6 +141,7 @@ public class Activity_Chi_Tiet_San_Pham extends AppCompatActivity {
             }
         });
     }
+
     void AnhXa(){
         toolbarct   = findViewById(R.id.toolbarchitietsanpham);
         imageView   = findViewById(R.id.imageviewchitietsanpham);

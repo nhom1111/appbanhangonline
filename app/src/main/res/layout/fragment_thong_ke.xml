@@ -8,6 +8,7 @@
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         app:title="Thống Kê"
+        android:id="@+id/toolbarthongke"
         android:background="#3569EF"
         android:layout_height="?attr/actionBarSize"/>
     <RelativeLayout

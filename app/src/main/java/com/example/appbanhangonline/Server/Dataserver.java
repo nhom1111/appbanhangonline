@@ -105,4 +105,8 @@ public interface Dataserver {
     @FormUrlEncoded
     @POST("server/huyspcho.php")
     Call<String> updatehuyttspcho(@Field("idchitiet")String idcthoadon);
+
+    @FormUrlEncoded
+    @POST("server/searchsp.php")
+    Call<List<SanPham>> search(@Field("searchtukhoa") String tukhoa);
 }

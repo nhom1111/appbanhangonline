@@ -9,11 +9,13 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <androidx.appcompat.widget.Toolbar
-            android:background="#3569EF"
-            app:title="Trang Chủ"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"/>
+            <androidx.appcompat.widget.Toolbar
+                android:background="#4E5CE9"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:title="Trang Chủ"
+                android:id="@+id/toolbartrangchu">
+            </androidx.appcompat.widget.Toolbar>
         <fragment
             android:id="@+id/fragment"
             android:name="com.example.appbanhangonline.Framment.Fragment_Banner"

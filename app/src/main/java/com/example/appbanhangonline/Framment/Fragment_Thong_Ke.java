@@ -2,6 +2,9 @@ package com.example.appbanhangonline.Framment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
@@ -11,6 +14,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import com.example.appbanhangonline.Adapter.Adapter_SPCho;
@@ -34,13 +39,18 @@ public class Fragment_Thong_Ke  extends Fragment {
     TextView txtdoanhthu,txtchitieu;
     TextView txtcacdonhangcuaban;
     ListView lvdonhang;
+    Toolbar toolbar;
     public static Adapter_SPCho adapter_spCho;
     public static ArrayList<SPCho> spchos;
     @Nullable
     @Override
+
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_thong_ke,container,false);
         AnhXa();
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        setHasOptionsMenu(true);
         KiemTraTaiKhoan();
 
         if (MainActivity.taiKhoan.getIdTaiKhoan()!=null){
@@ -90,10 +100,18 @@ public class Fragment_Thong_Ke  extends Fragment {
             });
 
         }
-
-
         return view;
     }
+
+    @Override
+    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_thong_ke,menu);
+
+
+
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
     private void KiemTraTaiKhoan() {
         if (MainActivity.taiKhoan.getIdTaiKhoan()==null){
             layoutchitieu.setVisibility(View.INVISIBLE);
@@ -115,5 +133,7 @@ public class Fragment_Thong_Ke  extends Fragment {
         txtdoanhthu     = view.findViewById(R.id.textviewdoanhthuthongke);
         lvdonhang       = view.findViewById(R.id.listviewdonhangthongke);
         txtcacdonhangcuaban = view.findViewById(R.id.textviewcacdonhangcuaban);
+        toolbar = view.findViewById(R.id.toolbarthongke);
     }
+
 }

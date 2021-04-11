@@ -36,6 +36,7 @@ import com.example.appbanhangonline.Model.SanPham;
 import com.example.appbanhangonline.R;
 import com.example.appbanhangonline.Server.APIServer;
 import com.example.appbanhangonline.Server.Dataserver;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -56,6 +57,7 @@ public class Activity_Add_SP extends AppCompatActivity {
     ImageView imganh;
     TextView txtthaydoi;
     Spinner sploai;
+    String idloaisp;
     Adapter_Spinner_Addsp adapter_spinner_addsp;
     final int REQUETS_CODE_CAMERA =123;
     final int REQUEST_CODE_FOLDER =456;
@@ -71,11 +73,19 @@ public class Activity_Add_SP extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent.hasExtra("sanpham")){
             SanPham sp = (SanPham) intent.getSerializableExtra("sanpham");
+            Picasso.with(getApplication()).load(sp.getAnhSP()).into(imganh);
             edttensp.setText(sp.getTenSP());
             edtgia.setText(sp.getGiaSP());
             edtmota.setText(sp.getMoTa());
             edtsoluong.setText(sp.getSoLuong());
-            sploai.setSelection(Integer.parseInt(sp.getIdLoaiSP()));
+            int idloaisp=0;
+            for(LoaiSP lsp:MainActivity.arrayAllloaiSP){
+                if (Integer.parseInt(lsp.getIdLoaiSP())==Integer.parseInt(sp.getIdLoaiSP())){
+                    break;
+                }
+                idloaisp++;
+            }
+            sploai.setSelection(idloaisp);
             btnthem.setText("Sửa");
         }
         txtthaydoi.setOnClickListener(new View.OnClickListener() {
@@ -92,10 +102,12 @@ public class Activity_Add_SP extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //upload anh vao server
-                uploadanh();
+                //thêm sp vào kệ hàng
+                insertsp();
 
-                //insert vao database
+
+                //sửa sp trong kệ hàng
+                updatesp();
 
             }
         });
@@ -105,6 +117,11 @@ public class Activity_Add_SP extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+
+
+    private void updatesp() {
     }
 
     @Override
@@ -155,15 +172,16 @@ public class Activity_Add_SP extends AppCompatActivity {
     }
 
 
-    private void uploadanh(){
-        LoaiSP loaisp = (LoaiSP) sploai.getSelectedItem();
-        String idloaisp = loaisp.getIdLoaiSP();
+    private void insertsp(){
+
+        LoaiSP loaisp2 = (LoaiSP) sploai.getSelectedItem();
+        String idloaisps = idloaisp;
         String idtaikhoan = MainActivity.taiKhoan.getIdTaiKhoan().toString();
         String tensp = edttensp.getText().toString();
         String soluong = edtsoluong.getText().toString();
         String gia =edtgia.getText().toString();
         String mota=edtmota.getText().toString();
-        if (idloaisp.equals("")||tensp.equals("")||soluong.equals("")||gia.equals("")||mota.equals("")) {
+        if (idloaisps.equals("")||tensp.equals("")||soluong.equals("")||gia.equals("")||mota.equals("")) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
         }else {
             File file = new File(realpath);
@@ -174,7 +192,6 @@ public class Activity_Add_SP extends AppCompatActivity {
             RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
             MultipartBody.Part body = MultipartBody.Part.createFormData("upload_file", file_path, requestBody);
 
-
             Dataserver dataserverText = APIServer.getServer();
             Call<String> callback = dataserverText.uploadphot(body);
             callback.enqueue(new Callback<String>() {
@@ -183,7 +200,7 @@ public class Activity_Add_SP extends AppCompatActivity {
                     String anh = (String) response.body();
                     String linkanh ="https://doanbanhoaonline.000webhostapp.com/anh/"+anh;
                     Dataserver dataserver = APIServer.getServer();
-                    Call<String> callback = dataserver.insertsanpham(idloaisp,idtaikhoan,tensp,soluong,gia,mota,linkanh);
+                    Call<String> callback = dataserver.insertsanpham(idloaisps,idtaikhoan,tensp,soluong,gia,mota,linkanh);
                     callback.enqueue(new Callback<String>() {
                         @Override
                         public void onResponse(Call<String> call, Response<String> response) {
@@ -204,9 +221,7 @@ public class Activity_Add_SP extends AppCompatActivity {
                         public void onFailure(Call<String> call, Throwable t) {
                         }
                     });
-
                 }
-
                 @Override
                 public void onFailure(Call<String> call, Throwable t) {
                     Toast.makeText(Activity_Add_SP.this,t.toString(), Toast.LENGTH_SHORT).show();
@@ -215,6 +230,8 @@ public class Activity_Add_SP extends AppCompatActivity {
         }
 
     }
+
+
 
     private void AnhXa() {
         edttensp   =findViewById(R.id.edittextaddsptensp);
@@ -235,7 +252,18 @@ public class Activity_Add_SP extends AppCompatActivity {
         adapter_spinner_addsp = new Adapter_Spinner_Addsp(R.layout.dong_spinner_addsp,MainActivity.arrayAllloaiSP,getApplication());
         sploai.setAdapter(adapter_spinner_addsp);
 
+        sploai.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                LoaiSP lsp = MainActivity.arrayAllloaiSP.get(position);
+                idloaisp = lsp.getIdLoaiSP();
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
