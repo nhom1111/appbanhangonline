@@ -19,7 +19,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DangKy_Activity extends AppCompatActivity {
-    EditText edttentaikhoan,edtSDT,edtgmail,edtpassword;
+    EditText edttentaikhoan,edtSDT,edtgmail,edtpassword,edtnhaplaipass;
     Button btnDangky;
     Toolbar toolbardk;
     @Override
@@ -36,39 +36,43 @@ public class DangKy_Activity extends AppCompatActivity {
                 String gmail        = edtgmail.getText().toString();
                 String SDT          = edtSDT.getText().toString();
                 String password     = edtpassword.getText().toString();
-                if(tentaikhoan.equals("")||gmail.equals("")||SDT.length()!=10||password.length()<6){
-                    Toast.makeText(DangKy_Activity.this,"Bạn nhập sai, mời nhập lại", Toast.LENGTH_SHORT).show();
+                String nhaplaipass  = edtnhaplaipass.getText().toString();
+                if (nhaplaipass.equals(password)) {
+                    if (tentaikhoan.equals("") || gmail.equals("") || SDT.length() != 10 || password.length() < 6) {
+                        Toast.makeText(DangKy_Activity.this, "Bạn nhập sai, mời nhập lại", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Dataserver dataserver = APIServer.getServer();
+                        Call<String> callback = dataserver.setTaiKhoan(tentaikhoan, gmail, SDT, password);
+                        callback.enqueue(new Callback<String>() {
+                            @Override
+                            public void onResponse(Call<String> call, Response<String> response) {
+                                String ketqua = response.body();
+                                if (ketqua.equals("success")) {
+                                    Toast.makeText(DangKy_Activity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(DangKy_Activity.this, Login_Activity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("tentaikhoan", tentaikhoan);
+                                    bundle.putString("password", password);
+                                    intent.putExtra("dangky", bundle);
+                                    startActivity(intent);
+                                } else if (ketqua.equals("tentaikhoantrung"))
+                                    Toast.makeText(DangKy_Activity.this, "Trùng tên tài khoản!", Toast.LENGTH_SHORT).show();
+                                else if (ketqua.equals("gmailtrung"))
+                                    Toast.makeText(DangKy_Activity.this, "Gmail đã đăng ký!", Toast.LENGTH_SHORT).show();
+                                else if (ketqua.equals("SDTtrung"))
+                                    Toast.makeText(DangKy_Activity.this, "Số điện thoại đã đăng ký!", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onFailure(Call<String> call, Throwable t) {
+                                Toast.makeText(DangKy_Activity.this, "Đăng ký lỗi,mời bạn đăng ký lại sau vài giây", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
                 }else{
-                    Dataserver dataserver = APIServer.getServer();
-                    Call<String> callback = dataserver.setTaiKhoan(tentaikhoan,gmail,SDT,password);
-                    callback.enqueue(new Callback<String>() {
-                        @Override
-                        public void onResponse(Call<String> call, Response<String> response) {
-                            String ketqua = response.body();
-                            if (ketqua.equals("success")) {
-                                Toast.makeText(DangKy_Activity.this, "Đăng ký thành công", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(DangKy_Activity.this,Login_Activity.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putString("tentaikhoan",tentaikhoan);
-                                bundle.putString("password",password);
-                                intent.putExtra("dangky",bundle);
-                                startActivity(intent);
-                            }else
-                            if (ketqua.equals("tentaikhoantrung"))
-                                Toast.makeText(DangKy_Activity.this, "Trùng tên tài khoản!", Toast.LENGTH_SHORT).show();
-                            else
-                            if(ketqua.equals("gmailtrung"))
-                                Toast.makeText(DangKy_Activity.this, "Gmail đã đăng ký!", Toast.LENGTH_SHORT).show();
-                            else
-                            if(ketqua.equals("SDTtrung"))
-                                Toast.makeText(DangKy_Activity.this, "Số điện thoại đã đăng ký!", Toast.LENGTH_SHORT).show();
-                        }
-                        @Override
-                        public void onFailure(Call<String> call, Throwable t) {
-                            Toast.makeText(DangKy_Activity.this, "Đăng ký lỗi,mời bạn đăng ký lại sau vài giây", Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    Toast.makeText(DangKy_Activity.this,"Mật khẩu không chính xác", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
     }
@@ -80,7 +84,7 @@ public class DangKy_Activity extends AppCompatActivity {
         edtpassword             =findViewById(R.id.edittextpassowrddk);
         btnDangky               =findViewById(R.id.buttondangkydk);
         toolbardk               =findViewById(R.id.toolbardk);
-
+        edtnhaplaipass          =findViewById(R.id.edittextnhaplaipassowrddk);
 
         setSupportActionBar(toolbardk);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

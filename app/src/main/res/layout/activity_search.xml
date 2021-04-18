@@ -23,6 +23,7 @@
         android:background="#FFFFFF"
         android:backgroundTint="#FFFFFF"
         android:id="@+id/edittexttimkiem"
+        android:hint="Tên, giá"
         android:layout_weight="19"
         android:layout_width="0dp"
         android:layout_height="match_parent"/>

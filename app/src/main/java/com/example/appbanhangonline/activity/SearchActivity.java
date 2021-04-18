@@ -24,6 +24,7 @@ import com.example.appbanhangonline.Server.Dataserver;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -47,7 +48,11 @@ public class SearchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String tukhoa = edt.getText().toString();
                 if (!tukhoa.equals("")){
-                    searchTuKhoaBaiHat(tukhoa);
+                    if (isNumeric(tukhoa)){
+                      searchTuKhoaTheoGia(tukhoa);
+                    } else{
+                        searchTuKhoaTen(tukhoa);
+                    }
                 }else{
                     Toast.makeText(SearchActivity.this, "Nhập từ khóa cần tìm!", Toast.LENGTH_SHORT).show();
                 }
@@ -55,7 +60,7 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    private void searchTuKhoaBaiHat(String query){
+    private void searchTuKhoaTen(String query){
         Dataserver dataserver = APIServer.getServer();
         Call<List<SanPham>> call = dataserver.search(query);
         call.enqueue(new Callback<List<SanPham>>() {
@@ -73,5 +78,35 @@ public class SearchActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    private void searchTuKhoaTheoGia(String query){
+        Dataserver dataserver = APIServer.getServer();
+        Call<List<SanPham>> call = dataserver.searchgia(query);
+        call.enqueue(new Callback<List<SanPham>>() {
+            @Override
+            public void onResponse(Call<List<SanPham>> call, Response<List<SanPham>> response) {
+                ArrayList<SanPham> arraylist = (ArrayList<SanPham>) response.body();
+                adapter = new AllSanPham_Adapter(SearchActivity.this,arraylist);
+                LinearLayoutManager linearLayoutManager = new LinearLayoutManager(SearchActivity.this);
+                linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
+                rv.setLayoutManager(linearLayoutManager);
+                rv.setAdapter(adapter);
+            }
+            @Override
+            public void onFailure(Call<List<SanPham>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public static boolean isNumeric(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
     }
 }

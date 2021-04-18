@@ -44,11 +44,22 @@
         android:textColorHint="#FFFFFF"
         android:textColor="#FFFFFF"
         android:layout_marginTop="10dp"
-        android:hint="password"
+        android:hint="Mật khẩu"
         android:inputType="textPassword"
         android:layout_gravity="center"
         android:layout_width="350dp"
         android:layout_height="wrap_content"/>
+    <EditText
+        android:id="@+id/edittextnhaplaipassowrddk"
+        android:textColorHint="#FFFFFF"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="10dp"
+        android:hint="Nhập laị mật khẩu"
+        android:inputType="textPassword"
+        android:layout_gravity="center"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"/>
+
     <Button
         android:id="@+id/buttondangkydk"
         android:background="@drawable/custom_button_login"

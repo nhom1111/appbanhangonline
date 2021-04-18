@@ -109,4 +109,8 @@ public interface Dataserver {
     @FormUrlEncoded
     @POST("server/searchsp.php")
     Call<List<SanPham>> search(@Field("searchtukhoa") String tukhoa);
+
+    @FormUrlEncoded
+    @POST("server/searchsptheogia.php")
+    Call<List<SanPham>> searchgia(@Field("giasp") String tukhoa);
 }

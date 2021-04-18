@@ -1,5 +1,7 @@
 package com.example.appbanhangonline.Framment;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -61,7 +63,28 @@ public class Fragment_Tai_Khoan extends Fragment {
                 }
             });
         }
+
+        batsukien();
+
         return view;
+    }
+
+    private void batsukien() {
+        lngioithieu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Dialog dialog = new Dialog(getContext());
+                dialog.setContentView(R.layout.custom_dialog_gioithieu);
+                //anh xa dialog
+                    TextView ten=    dialog.findViewById(R.id.textviewtenthongtin);
+                    TextView namsinh=    dialog.findViewById(R.id.textviewnamsinhthongtin);
+                    TextView gioitinh=    dialog.findViewById(R.id.textviewgioitinhthongtin);
+                    TextView sothich=    dialog.findViewById(R.id.textviewsothichthongtin);
+
+
+                dialog.show();
+            }
+        });
     }
 
     private void Anhxa() {
